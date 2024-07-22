@@ -1,0 +1,46 @@
+---
+import fetchApi from '../../lib/strapi';
+import type Blog from '../../interfaces/blog';
+
+export async function getStaticPaths() {
+  const blogs = await fetchApi<Blog[]>({
+    endpoint: 'blogs',
+    wrappedByKey: 'data',
+  });
+
+  return blogs.map((blog) => ({
+    params: { slug: blog.Title },
+    props: blog,
+  }));
+}
+type Props = Blog;
+
+const article = Astro.props;
+---
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>{article.Title}</title>
+  </head>
+
+  <body>
+    <main>
+        <!--
+      <img src={import.meta.env.STRAPI_URL + article.attributes.image.data.attributes.url} />
+       -->
+
+      <h1>{article.Title}</h1>
+
+      <!-- Render plain text -->
+      <p>{article.Body}</p>
+      <!-- Render markdown 
+      <MyMarkdownComponent>
+        {article.attributes.Body}
+      </MyMarkdownComponent>
+       Render html 
+      <Fragment set:html={article.attributes.content} />
+    -->
+    </main>
+  </body>
+</html>
