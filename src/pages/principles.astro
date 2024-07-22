@@ -1,0 +1,31 @@
+---
+import fetchApi from '../lib/strapi';
+import type Principle from '../interfaces/principle';
+
+const principles = await fetchApi<Principle[]>({
+  endpoint: 'principles', // the content type to fetch
+  wrappedByKey: 'data', // the key to unwrap the response
+});
+---
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Principles</title>
+  </head>
+
+  <body>
+    <main>
+      <ul>
+        {
+          principles.map((principle) => (
+            <li>
+                <h1>{principle.Title}</h1>
+                <p>{principle.Body}</p>
+            </li>
+          ))
+        }
+      </ul>
+    </main>
+  </body>
+</html>
