@@ -21,7 +21,7 @@ const principles = await fetchApi<Principle[]>({
           principles.map((principle) => (
             <li>
                 <h1>{principle.Title}</h1>
-                <p>{principle.Body}</p>
+                <p>{JSON.stringify(principle.Body)}</p>
             </li>
           ))
         }

@@ -20,8 +20,8 @@ const blogs = await fetchApi<Blog[]>({
         {
           blogs.map((blog) => (
             <li>
-                <h1>{blog.Title}</h1>
-                <p>{blog.Body}</p>
+                <h1><a href={"/blog/" + blog.Title}>{blog.Title}</a></h1>
+                <p>{JSON.stringify(blog.Body)}</p>
             </li>
           ))
         }

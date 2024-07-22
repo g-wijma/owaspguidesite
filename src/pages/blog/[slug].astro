@@ -33,7 +33,7 @@ const article = Astro.props;
       <h1>{article.Title}</h1>
 
       <!-- Render plain text -->
-      <p>{article.Body}</p>
+      <p>{JSON.stringify(article.Body)}</p>
       <!-- Render markdown 
       <MyMarkdownComponent>
         {article.attributes.Body}
