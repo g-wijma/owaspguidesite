@@ -1,9 +1,9 @@
 ---
-import fetchApi from '../lib/strapi';
-import type Principle from '../interfaces/principle';
+import fetchApi from '../../lib/strapi';
+import type Blog from '../../interfaces/blog';
 
-const principles = await fetchApi<Principle[]>({
-  endpoint: 'principles', // the content type to fetch
+const blogs = await fetchApi<Blog[]>({
+  endpoint: 'blogs', // the content type to fetch
   wrappedByKey: 'data', // the key to unwrap the response
 });
 ---
@@ -11,17 +11,17 @@ const principles = await fetchApi<Principle[]>({
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>Principles</title>
+    <title>Blogs</title>
   </head>
 
   <body>
     <main>
       <ul>
         {
-          principles.map((principle) => (
+          blogs.map((blog) => (
             <li>
-                <h1>{principle.Title}</h1>
-                <p>{principle.Body}</p>
+                <h1>{blog.Title}</h1>
+                <p>{blog.Body}</p>
             </li>
           ))
         }
