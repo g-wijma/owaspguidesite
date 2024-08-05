@@ -1,11 +1,12 @@
 ---
-import fetchApi from '../../lib/strapi';
-import type Blog from '../../interfaces/blog';
+import fetchApi from "../../lib/strapi";
+import type Blog from "../../interfaces/blog";
+import { resolveRichText } from "../../lib/richtext";
 
 export async function getStaticPaths() {
   const blogs = await fetchApi<Blog[]>({
-    endpoint: 'blogs',
-    wrappedByKey: 'data',
+    endpoint: "blogs",
+    wrappedByKey: "data",
   });
 
   return blogs.map((blog) => ({
@@ -15,32 +16,20 @@ export async function getStaticPaths() {
 }
 type Props = Blog;
 
-const article = Astro.props;
+const blog = Astro.props;
 ---
 
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
-    <title>{article.Title}</title>
+    <title>{blog.Title}</title>
   </head>
 
   <body>
     <main>
-        <!--
-      <img src={import.meta.env.STRAPI_URL + article.attributes.image.data.attributes.url} />
-       -->
+      <h1>{blog.Title}</h1>
 
-      <h1>{article.Title}</h1>
-
-      <!-- Render plain text -->
-      <p>{JSON.stringify(article.Body)}</p>
-      <!-- Render markdown 
-      <MyMarkdownComponent>
-        {article.attributes.Body}
-      </MyMarkdownComponent>
-       Render html 
-      <Fragment set:html={article.attributes.content} />
-    -->
+      <Fragment set:html={resolveRichText(blog.Body)} />
     </main>
   </body>
 </html>

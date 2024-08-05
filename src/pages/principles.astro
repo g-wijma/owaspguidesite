@@ -1,33 +1,36 @@
 ---
-import fetchApi from '../lib/strapi';
-import type Principle from '../interfaces/principle';
+import fetchApi from "../lib/strapi";
+import type Principle from "../interfaces/principle";
+import { resolveRichText } from "../lib/richtext";
 
 const principles = await fetchApi<Principle[]>({
-  endpoint: 'principles', // the content type to fetch
-  wrappedByKey: 'data', // the key to unwrap the response
+	endpoint: "principles", // the content type to fetch
+	wrappedByKey: "data", // the key to unwrap the response
 });
 ---
 
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-  <head>
-    <title>Principles</title>
-  </head>
+	<head>
+		<title>Principles</title>
+	</head>
 
-  <body>
-    <main>
-      <ul>
-        {
-          principles.map((principle) => (
-            <li>
-                <h1>{principle.Title}</h1>
-                <p>{JSON.stringify(principle.Body)}</p>
-            </li>
-          ))
-        }
-      </ul>
-    </main>
-  </body>
+	<body>
+		<main>
+			<ul>
+				{
+					principles.map((principle) => (
+						<li>
+							<h1>{principle.Title}</h1>
+							<Fragment
+								set:html={resolveRichText(principle.Body)}
+							/>
+						</li>
+					))
+				}
+			</ul>
+		</main>
+	</body>
 </html>
 
 <style>
@@ -55,7 +58,7 @@ const principles = await fetchApi<Principle[]>({
 		text-align: left;
 		margin-bottom: 0.5em;
 	}
-    p {
-        margin-bottom: 1rem;
-    }
+	p {
+		margin-bottom: 1rem;
+	}
 </style>

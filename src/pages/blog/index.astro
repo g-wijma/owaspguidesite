@@ -1,33 +1,38 @@
 ---
-import fetchApi from '../../lib/strapi';
-import type Blog from '../../interfaces/blog';
+import fetchApi from "../../lib/strapi";
+import type Blog from "../../interfaces/blog";
+import { resolveRichText } from "../../lib/richtext";
 
 const blogs = await fetchApi<Blog[]>({
-  endpoint: 'blogs', // the content type to fetch
-  wrappedByKey: 'data', // the key to unwrap the response
+	endpoint: "blogs", // the content type to fetch
+	wrappedByKey: "data", // the key to unwrap the response
 });
 ---
 
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-  <head>
-    <title>Blogs</title>
-  </head>
+	<head>
+		<title>Blogs</title>
+	</head>
 
-  <body>
-    <main>
-      <ul>
-        {
-          blogs.map((blog) => (
-            <li>
-                <h1><a href={"./" + blog.Title}>{blog.Title}</a></h1>
-                <p>{JSON.stringify(blog.Body)}</p>
-            </li>
-          ))
-        }
-      </ul>
-    </main>
-  </body>
+	<body>
+		<main>
+			<ul>
+				{
+					blogs.map((blog) => (
+						<li>
+							<h1>
+								<a href={"./" + blog.Title}>{blog.Title}</a>
+							</h1>
+							<Fragment
+								set:html={resolveRichText(blog.Body)}
+							/>
+						</li>
+					))
+				}
+			</ul>
+		</main>
+	</body>
 </html>
 
 <style>
@@ -55,7 +60,7 @@ const blogs = await fetchApi<Blog[]>({
 		text-align: left;
 		margin-bottom: 0.5em;
 	}
-    p {
-        margin-bottom: 1rem;
-    }
+	p {
+		margin-bottom: 1rem;
+	}
 </style>
