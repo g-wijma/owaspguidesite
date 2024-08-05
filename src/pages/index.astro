@@ -4,6 +4,22 @@ import Card from '../components/Card.astro';
 ---
 
 <Layout title="Welcome to OWASP Security Champions Guide.">
+	<nav>
+		<ul>
+			<li>Introduction</li>
+			<li>Manifesto</li>
+			<li>Principles
+				<ul>
+					<li>Be passionated about security</li>
+				</ul>
+			</li>
+			<li>Maturity model
+				<ul>
+					<li>Introduction</li>
+				</ul>
+			</li>
+		</ul>
+	</nav>	
 	<main>
 		<h1>Welcome to OWASP Security Champions Guide</span></h1>
 		<ul role="list" class="link-card-grid">
@@ -22,6 +38,16 @@ import Card from '../components/Card.astro';
 </Layout>
 
 <style>
+	body {
+		display: flex;
+	}
+	nav {
+		padding: 1rem;
+		flex: 0 0 300px;
+	}
+	nav ul {
+		padding-left: 20px;
+	}
 	main {
 		margin: auto;
 		padding: 1rem;
